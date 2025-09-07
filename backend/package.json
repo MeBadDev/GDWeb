@@ -1,0 +1,40 @@
+{
+  "name": "gdweb-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@fastify/compress": "latest",
+    "@fastify/multipart": "latest",
+    "@fastify/static": "latest",
+    "@fastify/swagger": "latest",
+    "@fastify/swagger-ui": "latest",
+    "@fastify/websocket": "latest",
+    "fastify": "^5.6.0",
+    "fastify-plugin": "latest",
+    "firebase-admin": "^12.6.0",
+    "ioredis": "^5.4.2",
+    "mime-types": "^2.1.35",
+    "nanoid": "^5.0.7",
+    "p-limit": "^6.1.0",
+  "dotenv": "^16.4.5",
+    "undici": "^6.19.8"
+  },
+  "devDependencies": {
+    "@types/mime-types": "^2.1.4",
+    "@types/node": "^22.5.4",
+    "eslint": "^9.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.2"
+  }
+}
