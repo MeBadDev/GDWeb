@@ -4,9 +4,7 @@ import compress from '@fastify/compress';
 import swagger from '@fastify/swagger';
 import swaggerUI from '@fastify/swagger-ui';
 import websocket from '@fastify/websocket';
-import fastifyStatic from '@fastify/static';
 import path from 'path';
-import fs from 'fs';
 import multipart from '@fastify/multipart';
 import { registerRoutes } from './routes/index.js';
 import { registerWs } from './ws/index.js';
@@ -24,17 +22,16 @@ async function start() {
   await app.register(websocket);
   await app.register(authPlugin);
 
-  // Static runtime assets (e.g., Godot WASM/JS)
-  const publicDir = path.join(process.cwd(), 'public');
-  if (fs.existsSync(publicDir)) {
-    await app.register(fastifyStatic, {
-      root: publicDir,
-      prefix: '/runtime/',
-      decorateReply: false,
-    });
-  } else {
-    app.log.warn(`public dir not found at ${publicDir}; static runtime disabled`);
-  }
+  // External runtime assets redirect (e.g., Godot WASM/JS hosted elsewhere)
+  app.get('/runtime/*', {
+    schema: { tags: ['system'] },
+  }, async (req, reply) => {
+    const suffix = (req.params as any)['*'] as string;
+    const base = app.config.RUNTIME_BASE_URL;
+    if (!base) return reply.code(404).send({ message: 'runtime not configured' });
+    const url = base.replace(/\/$/, '') + '/' + suffix.replace(/^\//, '');
+  return reply.redirect(url, 302);
+  });
 
   // Swagger/OpenAPI
   await app.register(swagger, buildOpenApi());

@@ -24,3 +24,9 @@
 {"level":30,"time":1757250182970,"pid":91080,"hostname":"DESKTOP-OHNUMKV","reqId":"req-a","res":{"statusCode":200},"responseTime":2.5364549979567528,"msg":"request completed"}
 {"level":30,"time":1757250182996,"pid":91080,"hostname":"DESKTOP-OHNUMKV","reqId":"req-b","req":{"method":"GET","url":"/docs/json","host":"localhost:3000","remoteAddress":"127.0.0.1","remotePort":48158},"msg":"incoming request"}
 {"level":30,"time":1757250182998,"pid":91080,"hostname":"DESKTOP-OHNUMKV","reqId":"req-b","res":{"statusCode":200},"responseTime":2.56564100086689,"msg":"request completed"}
+{"level":30,"time":1757252204639,"pid":91080,"hostname":"DESKTOP-OHNUMKV","reqId":"req-c","req":{"method":"HEAD","url":"/runtime/index.json","host":"localhost:3000","remoteAddress":"127.0.0.1","remotePort":37864},"msg":"incoming request"}
+{"level":30,"time":1757252204643,"pid":91080,"hostname":"DESKTOP-OHNUMKV","reqId":"req-c","msg":"Route HEAD:/runtime/index.json not found"}
+{"level":30,"time":1757252204656,"pid":91080,"hostname":"DESKTOP-OHNUMKV","reqId":"req-c","res":{"statusCode":404},"responseTime":12.56734000146389,"msg":"request completed"}
+{"level":30,"time":1757252242902,"pid":91080,"hostname":"DESKTOP-OHNUMKV","reqId":"req-d","req":{"method":"HEAD","url":"/runtime/index.json","host":"localhost:3000","remoteAddress":"127.0.0.1","remotePort":44364},"msg":"incoming request"}
+{"level":30,"time":1757252242903,"pid":91080,"hostname":"DESKTOP-OHNUMKV","reqId":"req-d","msg":"Route HEAD:/runtime/index.json not found"}
+{"level":30,"time":1757252242904,"pid":91080,"hostname":"DESKTOP-OHNUMKV","reqId":"req-d","res":{"statusCode":404},"responseTime":0.8749319985508919,"msg":"request completed"}
