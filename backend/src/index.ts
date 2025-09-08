@@ -13,7 +13,7 @@ import { env } from './plugins/env.js';
 import { authPlugin } from './plugins/auth.js';
 
 async function start() {
-  const app = Fastify({ logger: true });
+  const app = Fastify({ logger: true, trustProxy: true });
 
   // Plugins
   await app.register(env);
@@ -35,7 +35,7 @@ async function start() {
 
   // Swagger/OpenAPI
   await app.register(swagger, buildOpenApi());
-  await app.register(swaggerUI, { routePrefix: '/docs', staticCSP: true });
+  await app.register(swaggerUI, { routePrefix: '/docs' });
 
   // Health
   app.get('/health', {
