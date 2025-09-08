@@ -11,12 +11,37 @@ import { registerWs } from './ws/index.js';
 import { buildOpenApi } from './plugins/openapi.js';
 import { env } from './plugins/env.js';
 import { authPlugin } from './plugins/auth.js';
+import { initFirebase } from './services/firebase.js';
 
 async function start() {
-  const app = Fastify({ logger: true, trustProxy: true });
+  const app = Fastify({ 
+    logger: {
+      level: 'info'
+    }, 
+    trustProxy: true 
+  });
 
   // Plugins
   await app.register(env);
+  
+  // Initialize Firebase early to catch configuration issues
+  try {
+    initFirebase({
+      projectId: app.config.FIREBASE_PROJECT_ID,
+      clientEmail: app.config.FIREBASE_CLIENT_EMAIL,
+      privateKey: app.config.FIREBASE_PRIVATE_KEY,
+    });
+    app.log.info('Firebase initialized successfully');
+  } catch (err) {
+    app.log.warn({ error: err }, 'Firebase initialization failed - auth features will be disabled');
+  }
+  
+  // Log Firebase configuration status for debugging
+  app.log.info({
+    firebaseProjectId: app.config.FIREBASE_PROJECT_ID ? 'set' : 'missing',
+    firebaseClientEmail: app.config.FIREBASE_CLIENT_EMAIL ? 'set' : 'missing',
+    firebasePrivateKey: app.config.FIREBASE_PRIVATE_KEY ? 'set' : 'missing'
+  }, 'Firebase configuration status');
   await app.register(compress, { global: true, encodings: ['br', 'gzip'] });
   await app.register(multipart, { limits: { fileSize: 1024 * 1024 * 200 } }); // 200MB
   await app.register(websocket);
