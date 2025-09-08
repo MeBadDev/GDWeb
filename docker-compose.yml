@@ -6,7 +6,7 @@ services:
       PORT: 3000
       HOST: 0.0.0.0
       STORAGE_DIR: /data/storage
-      REDIS_URL: redis://cache:6379
+      REDIS_URL: redis://cache:${REDIS_PORT}
       FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID}
       FIREBASE_CLIENT_EMAIL: ${FIREBASE_CLIENT_EMAIL}
       FIREBASE_PRIVATE_KEY: ${FIREBASE_PRIVATE_KEY}
@@ -19,8 +19,9 @@ services:
 
   cache:
     image: redis:7-alpine
+    command: redis-server --port ${REDIS_PORT}
     ports:
-      - "6379:6379"
+      - "${REDIS_HOST_PORT}:${REDIS_PORT}"
 
 volumes:
   storage:
