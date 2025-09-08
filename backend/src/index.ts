@@ -34,8 +34,10 @@ async function start() {
   });
 
   // Swagger/OpenAPI
-  await app.register(swagger, buildOpenApi());
-  await app.register(swaggerUI, { routePrefix: '/docs' });
+  if (process.env.ENABLE_DOCS !== 'false') {
+    await app.register(swagger, buildOpenApi());
+    await app.register(swaggerUI, { routePrefix: '/docs' });
+  }
 
   // Health
   app.get('/health', {

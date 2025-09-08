@@ -1,6 +1,6 @@
 version: '3.9'
 services:
-  backend:
+  backend-base:
     build: ./backend
     environment:
       PORT: ${BACKEND_PORT}
@@ -10,12 +10,25 @@ services:
       FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID}
       FIREBASE_CLIENT_EMAIL: ${FIREBASE_CLIENT_EMAIL}
       FIREBASE_PRIVATE_KEY: ${FIREBASE_PRIVATE_KEY}
-    ports:
-      - "${BACKEND_HOST_PORT}:${BACKEND_PORT}"
+      ENABLE_DOCS: ${ENABLE_DOCS:-true}
     volumes:
       - storage:/data/storage
     depends_on:
       - cache
+
+  backend:
+    extends: backend-base
+    profiles: ["prod"]
+    environment:
+      ENABLE_DOCS: 'false'
+    ports:
+      - "${BACKEND_HOST_PORT}:${BACKEND_PORT}"
+
+  dev-backend:
+    extends: backend-base
+    profiles: ["dev"]
+    ports:
+      - "${BACKEND_HOST_PORT}:${BACKEND_PORT}"
 
   cache:
     image: redis:7-alpine
