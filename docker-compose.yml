@@ -10,7 +10,7 @@ services:
       FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID}
       FIREBASE_CLIENT_EMAIL: ${FIREBASE_CLIENT_EMAIL}
       FIREBASE_PRIVATE_KEY: ${FIREBASE_PRIVATE_KEY}
-      ENABLE_DOCS: ${ENABLE_DOCS:-true}
+      ENABLE_DOCS: ${ENABLE_DOCS:-false}
     volumes:
       - storage:/data/storage
     depends_on:
@@ -27,6 +27,8 @@ services:
   dev-backend:
     extends: backend-base
     profiles: ["dev"]
+    environment:
+      ENABLE_DOCS: 'true'
     ports:
       - "${BACKEND_HOST_PORT}:${BACKEND_PORT}"
 
