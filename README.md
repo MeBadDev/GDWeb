@@ -58,8 +58,8 @@ docker compose up --build
 ```
 
 This launches:
-- `backend` on port 3000
-- `cache` (Redis) on 6379
+- `backend` on port `${BACKEND_HOST_PORT}` (default 3000)
+- `cache` (Redis) on `${REDIS_HOST_PORT}` (default 6379)
 
 Volume `storage` persists uploaded files. Put Godot runtime assets (wasm/js) under `backend/public` to serve at `/runtime/`.
 

@@ -3,7 +3,7 @@ services:
   backend:
     build: ./backend
     environment:
-      PORT: 3000
+      PORT: ${BACKEND_PORT}
       HOST: 0.0.0.0
       STORAGE_DIR: /data/storage
       REDIS_URL: redis://cache:${REDIS_PORT}
@@ -11,7 +11,7 @@ services:
       FIREBASE_CLIENT_EMAIL: ${FIREBASE_CLIENT_EMAIL}
       FIREBASE_PRIVATE_KEY: ${FIREBASE_PRIVATE_KEY}
     ports:
-      - "3000:3000"
+      - "${BACKEND_HOST_PORT}:${BACKEND_PORT}"
     volumes:
       - storage:/data/storage
     depends_on:
